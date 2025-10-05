@@ -1,4 +1,4 @@
-# 🌉 BridgeAI
+#  BridgeAI
 
 ![License](https://img.shields.io/badge/License-MIT-green) ![Python](https://img.shields.io/badge/Python-3.11-blue) ![Docker](https://img.shields.io/badge/Docker-Container-blue) ![Hackathon](https://img.shields.io/badge/Hackathon-FutureStack25-purple)
 
