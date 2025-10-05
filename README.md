@@ -1,159 +1,94 @@
 # BridgeAI
 
-**An Online-First AI Assistant with Automatic Offline Fallback**
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE) [![Python](https://img.shields.io/badge/Python-3.11-blue)]() [![Docker](https://img.shields.io/badge/Docker-Container-blue)]() [![Hackathon](https://img.shields.io/badge/Hackathon-FutureStack25-purple)]()
+
+**BridgeAI** is an online-first AI assistant with automatic offline fallback. It prioritizes fast cloud AI (Cerebras) when internet is available, and seamlessly switches to a local model when the connection drops, ensuring continuous access to AI assistance.
+
+**Developed by Team Cyber_Samurais for WeMakeDevs FutureStack GenAI Hackathon 2025**
 
 ---
 
-## The Problem We Solve
+## Problem Statement
 
-Ever had an AI assistant fail because your internet dropped? **BridgeAI solves this.**
+Traditional AI assistants fail when internet connectivity is lost. BridgeAI addresses this issue by automatically switching to a local model.  
 
-- Traditional AI: Breaks when internet fails ❌
-- BridgeAI: Automatically switches to local model ✅
-
-Perfect for:
-- Remote/rural areas with unreliable internet
-- Working while traveling (airplane mode)
-- Privacy-sensitive tasks (use offline mode)
-- Cost-conscious users (reduce API costs)
-- Critical applications (healthcare, emergency services)
+Applicable scenarios:
+- Remote or rural areas with unreliable internet  
+- Travel or airplane mode  
+- Privacy-sensitive tasks  
+- Cost-conscious users  
+- Critical applications in healthcare or emergency services  
 
 ---
 
 ## Key Features
 
-- Online-First: Fast cloud AI (Cerebras llama-3.3-70b) when connected
-- Automatic Fallback: Seamlessly switches to local model when internet drops
-- Zero Manual Switching: Detects network changes automatically
-- Docker Containerized: Professional deployment, one-command setup
-- MCP Gateway: Smart routing layer using Model Context Protocol
-- Privacy Option: Fully functional offline mode (data stays local)
-- Always Responsive: Never shows "No connection" errors
+- Online-first operation using Cerebras llama-3.3-70b when connected  
+- Automatic offline fallback using LLaMA local model  
+- No manual switching required; network detection is automatic  
+- Docker containerized for easy setup and deployment  
+- MCP Gateway for intelligent routing between offline and online layers  
+- Caching and metadata logging for improved offline functionality  
 
 ---
 
-## Quick Start
+## Architecture & Workflow
 
-### For Hackathon Judges
-**[See FOR_JUDGES.md for complete testing guide](FOR_JUDGES.md)**
+### System Flowchart
 
-### Quick Setup (Windows)
+```mermaid
+flowchart TD
+    A[User Query] --> B[MCP Gateway]
+    B -->|Online Available| C[Cerebras API]
+    B -->|Offline| D[LLaMA Local Model]
+    C --> E[Response & Metadata Logged]
+    D --> E[Response & Metadata Logged]
+    E --> F[User Receives Answer]
+Sequence Overview
+User submits a query, which is received by the MCP Gateway
 
-```bash
-# Clone repository
-git clone https://github.com/YourUsername/BridgeAI.git
-cd BridgeAI
+MCP Gateway determines whether the system is online or offline
 
-# Build and start all services
-docker-compose up --build
-Architecture
-graph TD
-    %% User Interaction
-    A[User Sends Question] --> B[BridgeAI Receives Request]
+Online: Cerebras API handles the query
 
-    %% Network Detection
-    B --> C[Check Internet Connection]
+Offline: LLaMA local model handles the query
 
-    %% Decision: Online or Offline
-    C --> D{Internet Available?}
-    D -- Yes --> E[Send Request to MCP Gateway]
-    D -- No --> F[Route Request to Local Model]
+Response and metadata are logged, then returned to the user
 
-    %% MCP Gateway Flow
-    E --> G[Cloud AI (Cerebras llama-3.3-70b)]
-    G --> H[Process Response]
-    H --> I[Send Response Back to User]
+For detailed architecture and workflow, see ARCHITECTURE.md.
 
-    %% Local Model Flow
-    F --> J[Local AI Model (Offline)]
-    J --> K[Process Response]
-    K --> I
+Technology Stack
+Frontend: React + Vite, TailwindCSS, Lucide Icons
 
-    %% Docker and Deployment
-    subgraph Docker Setup
-        B
-        C
-        E
-        F
-    end
+Backend: FastAPI, llama-cpp-python, Cerebras Cloud SDK
 
-    style Docker Setup fill:#f9f,stroke:#333,stroke-width:2px
+Gateway: Custom MCP Gateway (Model Context Protocol)
 
-What's Included
+Infrastructure: Docker + Docker Compose, Microservices
 
-3 Dockerfiles (Frontend, Backend, Gateway)
-
-docker-compose.yml - Orchestrates all services
-
-Frontend: React + TailwindCSS + Vite
-
-Backend: FastAPI + llama-cpp-python + Cerebras SDK
-
-Gateway: MCP (Model Context Protocol)
+Quick Start
+Refer to QUICKSTART.md for installation and setup instructions.
 
 Use Cases
+Remote or rural areas with limited connectivity
 
-Perfect for:
+Offline knowledge assistant during travel
 
-Remote/Rural Areas - Limited internet connectivity
+Privacy-sensitive environments in healthcare
 
-Traveling - Use offline mode seamlessly
+Education in offline or rural setups
 
-Privacy-Conscious - Keep data local
-
-Hybrid Work - Always responsive AI
-
-System Requirements
-Minimum
-
-Docker Desktop installed (Windows, Linux, macOS)
-
-At least 8GB RAM
-
-2 CPU cores minimum
-
-Testing Network Switching
-
-Start the app with internet connection
-
-Send a message → Uses Cerebras (fast response)
-
-Disable WiFi/Internet
-
-Send another message → Automatically switches to Local Model
-
-Re-enable internet → Switches back to Cerebras
-
-Previous offline messages auto-enhance
-
-No manual toggle needed!
-
-Commands
-# Start application
-docker-compose up --build
-
-# Stop application
-docker-compose down
-
-# Rebuild a specific service
-docker-compose up --build <service_name>
+Enterprise environments with air-gapped networks
 
 Contributing
-
-We welcome contributions! Please see CONTRIBUTING.md
- for details.
+See CONTRIBUTING.md for guidelines on contributing to this project.
 
 License
-
-This project is licensed under the MIT License - see LICENSE
- for details.
+MIT License – see LICENSE for details
 
 Team Cyber_Samurais
+Developed for WeMakeDevs FutureStack GenAI Hackathon 2025.
+Acknowledgments: Cerebras, Meta (LLaMA), Docker, FastAPI & React communities.
 
-Built for WeMakeDevs FutureStack GenAI Hackathon 2025
-
-Acknowledgments
-
-Cerebras for the lightning-fast AI API
-
-Meta for the Llama 2 model
+pgsql
+Copy code
